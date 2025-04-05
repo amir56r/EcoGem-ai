@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoGem AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+</head>
+<body>
+    <!-- Auth Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            <div class="auth-tabs">
+                <button class="active" id="loginTab">Login</button>
+                <button id="signupTab">Sign Up</button>
+            </div>
+            
+            <div class="auth-form" id="loginForm">
+                <h2>Welcome Back</h2>
+                <input type="email" id="loginEmail" placeholder="Email">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button id="loginButton">Login</button>
+                <p class="auth-error" id="loginError"></p>
+            </div>
+            
+            <div class="auth-form hidden" id="signupForm">
+                <h2>Create Account</h2>
+                <input type="text" id="signupName" placeholder="Full Name">
+                <input type="email" id="signupEmail" placeholder="Email">
+                <input type="password" id="signupPassword" placeholder="Password">
+                <input type="password" id="signupConfirm" placeholder="Confirm Password">
+                <button id="signupButton">Sign Up</button>
+                <p class="auth-error" id="signupError"></p>
+                <p class="privacy-notice">By signing up, you agree to our <a href="#" id="privacyLink">Privacy Policy</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container hidden" id="appContainer">
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>EcoGem AI</h1>
+            </div>
+            <div class="user-menu">
+                <span id="userName">User</span>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" id="viewHistory"><i class="fas fa-history"></i> Action History</a>
+                        <a href="#" id="privacyBtn"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <button class="new-chat-btn" id="newChatBtn">
+                    <i class="fas fa-plus"></i> <span>New Chat</span>
+                </button>
+                <div class="chat-history" id="chatHistoryList"></div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <main class="chat-container">
+                <div class="chat-window" id="chatWindow">
+                    <div class="welcome-message">
+                        <h2>Welcome to EcoGem AI</h2>
+                        <p>Your sustainable AI assistant powered by Google Gemini</p>
+                        <div class="quick-actions">
+                            <button class="quick-action" data-prompt="Help me plan a sustainable diet">
+                                <i class="fas fa-utensils"></i> Sustainable Diet
+                            </button>
+                            <button class="quick-action" data-prompt="Suggest eco-friendly products for my home">
+                                <i class="fas fa-home"></i> Eco Products
+                            </button>
+                            <button class="quick-action" data-prompt="Explain carbon footprint in simple terms">
+                                <i class="fas fa-shoe-prints"></i> Carbon Footprint
+                            </button>
+                        </div>
+                        <div class="explore-grid hidden" id="exploreGrid">
+                            <div class="explore-card" data-prompt="Explain carbon footprint in simple terms">
+                                <i class="fas fa-shoe-prints"></i>
+                                <span>Carbon Footprint</span>
+                            </div>
+                            <div class="explore-card" data-prompt="Suggest eco-friendly products for home">
+                                <i class="fas fa-home"></i>
+                                <span>Eco Products</span>
+                            </div>
+                            <div class="explore-card" data-prompt="How to start a sustainable diet?">
+                                <i class="fas fa-utensils"></i>
+                                <span>Sustainable Diet</span>
+                            </div>
+                            <div class="explore-card" data-prompt="Best practices for recycling electronics">
+                                <i class="fas fa-recycle"></i>
+                                <span>E-Waste Recycling</span>
+                            </div>
+                            <div class="explore-card" data-prompt="Benefits of solar energy for homeowners">
+                                <i class="fas fa-solar-panel"></i>
+                                <span>Solar Energy</span>
+                            </div>
+                            <div class="explore-card" data-prompt="How to create a sustainable garden">
+                                <i class="fas fa-seedling"></i>
+                                <span>Sustainable Gardening</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="input-tools">
+                        <button class="tool-btn" id="uploadBtn" title="Upload File">
+                            <i class="fas fa-paperclip"></i>
+                            <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt,.jpg,.png">
+                        </button>
+                        <button class="tool-btn" id="webSearchBtn" title="Web Search">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="tool-btn" id="exploreBtn" title="Explore Topics">
+                            <i class="fas fa-compass"></i>
+                        </button>
+                    </div>
+                    <textarea id="userInput" placeholder="Type your message here..." rows="1"></textarea>
+                    <button id="sendButton">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Your Action History</h2>
+            <div class="history-list" id="actionHistoryList"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="privacyModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Privacy Policy</h2>
+            <div class="privacy-content">
+                <h3>Data Collection</h3>
+                <p>We collect your chat history and uploaded files to provide personalized service. Your data is encrypted and stored securely.</p>
+                
+                <h3>Data Usage</h3>
+                <p>Your data is used solely to improve your experience with EcoGem AI. We do not sell or share your data with third parties.</p>
+                
+                <h3>Security</h3>
+                <p>We implement industry-standard security measures to protect your information from unauthorized access.</p>
+                
+                <h3>Your Rights</h3>
+                <p>You can request deletion of your data at any time by contacting support.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
